@@ -10,6 +10,5 @@
     "nuxt": "3.0.0-rc.8"
   },
   "dependencies": {
-    "three": "^0.143.0"
   }
 }
