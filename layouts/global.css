@@ -1,0 +1,64 @@
+/* GLOBAL CSS */
+
+/* @import url("https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Syne:wght@400..800&display=swap"); */
+
+/* limited weights */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Syne:wght@400;500&display=swap');
+
+@font-face {
+    font-family: Mirra;
+    src: local("Mirra"),
+         url(@/assets/fonts/Mirra.otf);
+  }
+
+:root {
+    --background_color: black;
+    --font_high_color: white;
+    --line_color: #b8b8b8;
+    --signature_color: #ff0011;
+
+}
+
+/* border-box everywhere... */
+/* apply a natural box layout model to all elements, but allowing components to change */
+html {
+    box-sizing: border-box;
+}
+
+*,
+*:before,
+*:after {
+    box-sizing: inherit;
+}
+
+html body {
+    font-family: 'Mirra';
+    background-color: var(--background_color);
+    margin: 0;
+    padding: 0;
+    width: 100vw;
+    height: 100vh;
+    font-size: clamp(11px, 1vw, 500px);
+    color: var(--font_high_color);
+}
+
+/* MISC */
+
+.noselect {
+    -webkit-touch-callout: none;
+    /* iOS Safari */
+    -webkit-user-select: none;
+    /* Safari */
+    -khtml-user-select: none;
+    /* Konqueror HTML */
+    -moz-user-select: none;
+    /* Old versions of Firefox */
+    -ms-user-select: none;
+    /* Internet Explorer/Edge */
+    user-select: none;
+    /* Non-prefixed version, currently
+                                    supported by Chrome, Edge, Opera and Firefox */
+    cursor: inherit;
+}
+
+/* FONT */
