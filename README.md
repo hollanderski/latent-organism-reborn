@@ -5,3 +5,9 @@ Latent organism renaît de ses cendres
 
 - [ ] Upscale texture image
 - [ ] Mesh interpolation
+
+## Quick start 
+
+First installation : `npm i`
+
+Run server : `npm run dev`
