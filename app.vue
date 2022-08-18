@@ -34,7 +34,7 @@ export default {
 }
 
 header {
-  padding: 0.8rem;
+  padding: 1rem;
   font-size: 4em;
   font-weight: bold;
   text-align: center;
@@ -42,6 +42,7 @@ header {
 
 #shape-screen {
   /* border: solid 1px #ccc; */
+  position: relative;
   width: 80%;
   height: -webkit-fill-available;
   

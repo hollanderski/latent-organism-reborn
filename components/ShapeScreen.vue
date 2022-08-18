@@ -1,6 +1,10 @@
 <template>
-    <div ref="shape_canvas">
+        <div id="text_1">Latent organism creates a novel technique for the creation of 3D objects using a tangible
+            interface.<br/><br/>
 
+            Building on creations by generative algorithms, our tool allows anyone to create unique and complex 3D
+            shapes through natural and playful interactions with an intuitive and sensitive tactile interface. </div>
+    <div id="shape_canvas" ref="shape_canvas">
     </div>
 </template>
 
@@ -36,10 +40,20 @@ export default {
                 peaking: 0.1,
             },
             changeco: -1,
-            changepat: -1
+            changepat: -1,
+            camera_zoom: 5,
+            camera_zoom_max: 5,
+            camera_zoom_min: 2,
+            camera_zoom_speed: 0.1,
+            flag_intro_finished: false
         }
     },
     props: {},
+    watch: {
+        flag_intro_finished() {
+
+        }
+    },
     computed: {},
     methods: {
         mandariane(kx, ky) {
@@ -288,11 +302,14 @@ export default {
         const max_twist = 2000//400
         let goback = false;
 
-        window.addEventListener('keyup', function (ev) {
-            console.log(ev); // declared in your component methods
-            console.log(ev['key']); // declared in your component methods
-            if (ev['key'] == 'a') {
-                mandaring = 1
+        window.addEventListener("wheel", (event) => {
+            if (self.flag_intro_finished == false & parseFloat(self.camera.position.z) != self.camera_zoom_min) {
+                /* if(event.deltaY > 0){ */
+                self.camera_zoom = Math.max(self.camera_zoom - (event.deltaY / 50).toFixed(2), self.camera_zoom_min)
+                console.info(event.deltaY, '->', self.camera_zoom, '->', self.camera.position.z)
+                /* } */
+            } else {
+                self.flag_intro_finished = true
             }
         });
 
@@ -303,7 +320,15 @@ export default {
 
         // Create a basic perspective camera
         self.camera = new THREE.PerspectiveCamera(75, self.$refs.shape_canvas.offsetWidth / forced_height, 0.1, 1000);
-        self.camera.position.z = 5;
+        self.camera.position.z = self.camera_zoom;
+        window.addEventListener('keyup', function (ev) {
+            console.log(ev); // declared in your component methods
+            console.log(ev['key']); // declared in your component methods
+            if (ev['key'] == 'a') {
+                self.camera_zoom = 10
+                console.log(self.camera_zoom)
+            }
+        });
         // Create a renderer with Antialiasing
         self.renderer = new THREE.WebGLRenderer({ antialias: true });
         // Configure renderer clear color
@@ -402,10 +427,20 @@ export default {
         /////////////////////////////////////////// RENDER LOOP ///////////////////////////////////////////
         let render = function () {
 
-            //console.log('render')
+            //console.log(self.camera.position.z)
 
             requestAnimationFrame(render);
             let nbr = 0
+
+            //camera osc
+            if (Math.abs(self.camera.position.z - self.camera_zoom) <= self.camera_zoom_speed) {
+                self.camera.position.z = self.camera_zoom
+            } else if (self.camera.position.z > self.camera_zoom) {
+                self.camera.position.z = (parseFloat(self.camera.position.z) - self.camera_zoom_speed).toFixed(2);
+            } else if (self.camera.position.z < self.camera_zoom) {
+                self.camera.position.z = (parseFloat(self.camera.position.z) + self.camera_zoom_speed).toFixed(2);
+            }
+
 
             if (twisting == 0 && iteration < max_twist && !goback) {
                 nbr++
@@ -543,4 +578,20 @@ export default {
 </script>
 
 <style scoped>
+#shape_canvas {
+    transform: v-bind("flag_intro_finished == true ? 'translateX(-25%)' : 'translateX(0%)'");
+    transition: transform 1s ease;
+}
+
+#text_1 {
+    font-family: 'Raleway';
+    text-transform: uppercase;
+    line-height: 1.2rem;
+    position: absolute;
+    width: 45%;
+    right: 25%;
+    top: 50%;
+    transform: translate(-50%,-50%);
+    z-index: 10;
+}
 </style>
