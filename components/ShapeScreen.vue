@@ -1,10 +1,10 @@
 <template>
-        <div id="text_1">Latent organism creates a novel technique for the creation of 3D objects using a tangible
-            interface.<br/><br/>
 
-            Building on creations by generative algorithms, our tool allows anyone to create unique and complex 3D
-            shapes through natural and playful interactions with an intuitive and sensitive tactile interface. </div>
     <div id="shape_canvas" ref="shape_canvas">
+        <div class="ui_info" id="emancipacing_ui">emancipacing : {{ sensors['emancipacing'] }}</div>
+        <div class="ui_info" id="peaking_ui">peaking : {{ sensors['peaking'] }}</div>
+        <div class="ui_info" id="blobing_ui">blobing : {{ sensors['peaking'] }}</div>
+        <div class="ui_info" id="anemoning_ui">anemoning : {{ sensors['peaking'] }}</div>
     </div>
 </template>
 
@@ -45,15 +45,12 @@ export default {
             camera_zoom_max: 5,
             camera_zoom_min: 2,
             camera_zoom_speed: 0.1,
-            flag_intro_finished: false
+            flag_intro_finished: false,
+            stade: 0,
         }
     },
     props: {},
-    watch: {
-        flag_intro_finished() {
-
-        }
-    },
+    watch: {},
     computed: {},
     methods: {
         mandariane(kx, ky) {
@@ -306,10 +303,12 @@ export default {
             if (self.flag_intro_finished == false & parseFloat(self.camera.position.z) != self.camera_zoom_min) {
                 /* if(event.deltaY > 0){ */
                 self.camera_zoom = Math.max(self.camera_zoom - (event.deltaY / 50).toFixed(2), self.camera_zoom_min)
-                console.info(event.deltaY, '->', self.camera_zoom, '->', self.camera.position.z)
+                //console.info(event.deltaY, '->', self.camera_zoom, '->', self.camera.position.z)
                 /* } */
             } else {
                 self.flag_intro_finished = true
+                self.stade = 1
+                self.$emit('stadeUpdate', 1)
             }
         });
 
@@ -317,6 +316,7 @@ export default {
         self.scene = new THREE.Scene();
 
         const forced_height = 600;
+        /* const forced_width = forced_height */
 
         // Create a basic perspective camera
         self.camera = new THREE.PerspectiveCamera(75, self.$refs.shape_canvas.offsetWidth / forced_height, 0.1, 1000);
@@ -332,7 +332,7 @@ export default {
         // Create a renderer with Antialiasing
         self.renderer = new THREE.WebGLRenderer({ antialias: true });
         // Configure renderer clear color
-        self.renderer.setClearColor("#000000");
+        self.renderer.setClearColor(0x000000, 0);
         self.renderer.setPixelRatio(window.devicePixelRatio);
         self.renderer.outputEncoding = THREE.sRGBEncoding;
 
@@ -579,19 +579,37 @@ export default {
 
 <style scoped>
 #shape_canvas {
-    transform: v-bind("flag_intro_finished == true ? 'translateX(-25%)' : 'translateX(0%)'");
+    transform: v-bind("flag_intro_finished == true ? 'translateX(-45%)' : 'translateX(0%)'");
     transition: transform 1s ease;
 }
 
-#text_1 {
+.ui_info {
     font-family: 'Raleway';
     text-transform: uppercase;
-    line-height: 1.2rem;
+    font-size: 0.6rem;
+    /* border: solid red 1px; */
     position: absolute;
-    width: 45%;
-    right: 25%;
-    top: 50%;
-    transform: translate(-50%,-50%);
-    z-index: 10;
+    opacity: v-bind("stade == 0 ? 0 : 1");
+    transition: opacity 1s ease;
+}
+
+#emancipacing_ui {
+    left: 0%;
+    top: 0%;
+}
+
+#peaking_ui {
+    right: 0%;
+    top: 0%;
+}
+
+#blobing_ui {
+    left: 0%;
+    bottom: 0%;
+}
+
+#anemoning_ui {
+    right: 0%;
+    bottom: 0%;
 }
 </style>
