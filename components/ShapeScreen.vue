@@ -20,10 +20,10 @@ export default {
     head() {
         return {
             script: [
-                { src: 'assets/scripts/three.min.js' },
-                { src: 'assets/scripts/SubsurfaceScatteringShader.js' },
-                { src: 'assets/scripts/perlin.js' },
-                { src: 'assets/scripts/socket.io.js' },
+                { src: 'modules/three.min.js' },
+                { src: 'modules/SubsurfaceScatteringShader.js' },
+                { src: 'modules/perlin.js' },
+                { src: 'modules/socket.io.js' },
                 { src: 'https://cdn.rawgit.com/mrdoob/three.js/master/examples/js/curves/CurveExtras.js' },
             ],
         }
@@ -46,10 +46,15 @@ export default {
             camera_zoom_min: 2,
             camera_zoom_speed: 0.1,
             flag_intro_finished: false,
-            stade: 0,
+            /* stade: 0, */
         }
     },
-    props: {},
+    props: {
+        stade: {
+            type: Number,
+            default: 0,
+        },
+    },
     watch: {},
     computed: {},
     methods: {
@@ -255,19 +260,19 @@ export default {
             console.log(nb, this.loader)
 
             switch (nb) {
-                case 0: this.uniforms['thicknessMap'].value = this.loader.load('assets/textures/biopsy.png'); break;
-                case 1: this.uniforms['thicknessMap'].value = this.loader.load('assets/textures/bunny_thickness.jpg'); break;
-                case 2: this.uniforms['thicknessMap'].value = this.loader.load('assets/textures/waves.jpg'); break;
-                case 3: this.uniforms['thicknessMap'].value = this.loader.load('assets/textures/mandelbrot1.jpg'); break;
-                case 4: this.uniforms['thicknessMap'].value = this.loader.load('assets/textures/mandelbrot3.jpg'); break;
-                case 5: this.uniforms['thicknessMap'].value = this.loader.load('assets/textures/mandelbrot4.jpg'); break;
-                case 6: this.uniforms['thicknessMap'].value = this.loader.load('assets/textures/mandelbrot5.jpg'); break;
-                case 7: this.uniforms['thicknessMap'].value = this.loader.load('assets/textures/mandelbrot6.jpg'); break;
-                case 8: this.uniforms['thicknessMap'].value = this.loader.load('assets/textures/mandelbrot7.jpg'); break;
-                case 9: this.uniforms['thicknessMap'].value = this.loader.load('assets/textures/buttercup.png'); break;
-                case 10: this.uniforms['thicknessMap'].value = this.loader.load('assets/textures/celery.jpg'); break;
-                case 11: this.uniforms['thicknessMap'].value = this.loader.load('assets/textures/cells.jpg'); break;
-                case 12: this.uniforms['thicknessMap'].value = this.loader.load('assets/textures/bacteria.jpg'); break;
+                case 0: this.uniforms['thicknessMap'].value = this.loader.load('textures/biopsy.png'); break;
+                case 1: this.uniforms['thicknessMap'].value = this.loader.load('textures/bunny_thickness.jpg'); break;
+                case 2: this.uniforms['thicknessMap'].value = this.loader.load('textures/waves.jpg'); break;
+                case 3: this.uniforms['thicknessMap'].value = this.loader.load('textures/mandelbrot1.jpg'); break;
+                case 4: this.uniforms['thicknessMap'].value = this.loader.load('textures/mandelbrot3.jpg'); break;
+                case 5: this.uniforms['thicknessMap'].value = this.loader.load('textures/mandelbrot4.jpg'); break;
+                case 6: this.uniforms['thicknessMap'].value = this.loader.load('textures/mandelbrot5.jpg'); break;
+                case 7: this.uniforms['thicknessMap'].value = this.loader.load('textures/mandelbrot6.jpg'); break;
+                case 8: this.uniforms['thicknessMap'].value = this.loader.load('textures/mandelbrot7.jpg'); break;
+                case 9: this.uniforms['thicknessMap'].value = this.loader.load('textures/buttercup.png'); break;
+                case 10: this.uniforms['thicknessMap'].value = this.loader.load('textures/celery.jpg'); break;
+                case 11: this.uniforms['thicknessMap'].value = this.loader.load('textures/cells.jpg'); break;
+                case 12: this.uniforms['thicknessMap'].value = this.loader.load('textures/bacteria.jpg'); break;
             }
 
             this.changepat = -1
@@ -307,7 +312,7 @@ export default {
                 /* } */
             } else {
                 self.flag_intro_finished = true
-                self.stade = 1
+                /* self.stade = 1 */
                 self.$emit('stadeUpdate', 1)
             }
         });
@@ -367,9 +372,9 @@ export default {
 
 
         self.loader = new THREE.TextureLoader();
-        const imgTexture = self.loader.load('assets/textures/white.jpg');
-        const thicknessTexture = self.loader.load('assets/textures/bunny_thickness.jpg');
-        //const thicknessTexture = self.loader.load('assets/textures/biopsy.png')
+        const imgTexture = self.loader.load('textures/white.jpg');
+        const thicknessTexture = self.loader.load('textures/bunny_thickness.jpg');
+        //const thicknessTexture = self.loader.load('textures/biopsy.png')
         imgTexture.wrapS = imgTexture.wrapT = THREE.RepeatWrapping;
 
         const shader = THREE.SubsurfaceScatteringShader;
@@ -589,7 +594,7 @@ export default {
     font-size: 0.6rem;
     /* border: solid red 1px; */
     position: absolute;
-    opacity: v-bind("stade == 0 ? 0 : 1");
+    opacity: v-bind("stade == 2 ? 1 : 0");
     transition: opacity 1s ease;
     display: flex;
     flex-direction: column;

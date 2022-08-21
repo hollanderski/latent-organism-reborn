@@ -8,7 +8,7 @@
     </div>
 
     <div id="shape-screen">
-      <ShapeScreen @stade-update.once="update_stade"></ShapeScreen>
+      <ShapeScreen @stade-update.once="update_stade" :stade="stade"></ShapeScreen>
     </div>
 
     <div id="scroll_down" v-if="stade == 0">Scroll Down</div>

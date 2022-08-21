@@ -8,10 +8,7 @@ export default defineNuxtConfig({
 
     head: {
         script: [
-            { src: "sdfdfthree/build/three.js"},
-            { src: "https://cdn.rawgit.com/mrdoob/three.js/master/examples/js/curves/CurveExtras.js" },
-            /* { src: "~/assets/scripts/three.min.js" }, */
-            { src: "~/assets/scripts/SubsurfaceScatteringShader.js" }
+
         ],
     },
 
