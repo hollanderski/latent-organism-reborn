@@ -1,10 +1,10 @@
 <template>
 
     <div id="shape_canvas" ref="shape_canvas">
-        <div class="ui_info" id="emancipacing_ui">emancipacing : {{ sensors['emancipacing'] }}</div>
-        <div class="ui_info" id="peaking_ui">peaking : {{ sensors['peaking'] }}</div>
-        <div class="ui_info" id="blobing_ui">blobing : {{ sensors['peaking'] }}</div>
-        <div class="ui_info" id="anemoning_ui">anemoning : {{ sensors['peaking'] }}</div>
+        <div class="ui_info" id="emancipacing_ui">emancipacing : {{ sensors['emancipacing'] }} <div class="key_letter">A</div></div>
+        <div class="ui_info" id="peaking_ui">peaking : {{ sensors['peaking'] }} <div class="key_letter">Z</div></div>
+        <div class="ui_info" id="blobing_ui"><div class="key_letter">E</div>blobing : {{ sensors['peaking'] }}</div>
+        <div class="ui_info" id="anemoning_ui"><div class="key_letter">R</div>anemoning : {{ sensors['peaking'] }}</div>
     </div>
 </template>
 
@@ -321,14 +321,14 @@ export default {
         // Create a basic perspective camera
         self.camera = new THREE.PerspectiveCamera(75, self.$refs.shape_canvas.offsetWidth / forced_height, 0.1, 1000);
         self.camera.position.z = self.camera_zoom;
-        window.addEventListener('keyup', function (ev) {
+       /*  window.addEventListener('keyup', function (ev) {
             console.log(ev); // declared in your component methods
             console.log(ev['key']); // declared in your component methods
             if (ev['key'] == 'a') {
                 self.camera_zoom = 10
                 console.log(self.camera_zoom)
             }
-        });
+        }); */
         // Create a renderer with Antialiasing
         self.renderer = new THREE.WebGLRenderer({ antialias: true });
         // Configure renderer clear color
@@ -579,8 +579,8 @@ export default {
 
 <style scoped>
 #shape_canvas {
-    transform: v-bind("flag_intro_finished == true ? 'translateX(-45%)' : 'translateX(0%)'");
-    transition: transform 1s ease;
+    /* border: solid; */
+
 }
 
 .ui_info {
@@ -591,6 +591,21 @@ export default {
     position: absolute;
     opacity: v-bind("stade == 0 ? 0 : 1");
     transition: opacity 1s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.key_letter {
+    border: solid white 1px;
+    width: 1rem;
+    height: 1rem;
+    padding: 2px;
+    margin: 0.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 #emancipacing_ui {
