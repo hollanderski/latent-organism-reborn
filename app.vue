@@ -1,6 +1,6 @@
 <template>
   <div id="main">
-    <header><div id="title">LATENT ORGANISM</div><div class="menu_section">github</div><div class="menu_section">Contact us</div></header>
+    <header><div id="title"><span :style="{'margin-right': String(space_between_title)+'rem', transition: 'margin-right 1s'}">LATENT</span> ORGANISM</div><div class="menu_section"><a href="https://github.com/hollanderski/latent-organism-reborn">github</a></div><div class="menu_section">Contact us</div></header>
 
     <div v-if="stade == 1" id="text_1">
       <div v-html="script[current_script_index]"></div>
@@ -47,10 +47,11 @@ The interaction can be more or less active, and can also be experienced in a con
 Each generated shape, combining the human inputs and the machine’s imagination, is unique.`,
         `How it was built
 
-The interface was built using e-textile, DIY pressure sensors, conductive paint, silicone and thermochromic pigments. 3D visuals were created with NVIDIA Kaolin and three.js. This is a joint work with Adrien Chuttarsing, Sophie Chen and Marianne Canu.
+The interface was built using e-textile, DIY pressure sensors, conductive paint, silicone and thermochromic pigments. 3D visuals were created with NVIDIA Kaolin and three.js. This is a joint work with <a href="http://ninonlm.com">Ninon Lizé Masclef</a>, <a href="https://adrienchuttarsing.com">Adrien Chuttarsing</a>, Sophie Chen and Marianne Canu.
 Check our git repo `,
-`The installation won the second prize of the creARTathon Paris-Saclay, an interdisciplinary workshop that brings together Arts, Design, Artificial Intelligence and Human-Computer Interaction.`
-      ]
+`The installation won the second prize of the <a href="https://creartathon.com">creARTathon</a> Paris-Saclay, an interdisciplinary workshop that brings together Arts, Design, Artificial Intelligence and Human-Computer Interaction.`
+      ],
+      space_between_title: 0,
     }
   },
   computed: {
@@ -62,6 +63,18 @@ Check our git repo `,
       this.stade = n;
     }
   },
+  watch: {
+    stade(){
+      if (this.stade == 1) {
+        this.space_between_title = 18;
+        setTimeout(() => {
+          this.space_between_title = 0;
+        }, 2000);
+      } else if (this.stade == 2) {
+        this.space_between_title = 0;
+      }
+    }
+  },
   mounted() {
     let self = this;
     window.addEventListener('keyup', function handler(ev) {
@@ -69,6 +82,7 @@ Check our git repo `,
       console.log(ev['key']); // declared in your component methods
       if (ev['key'] == 'Enter') {
         self.current_script_index += 1
+        self.space_between_title += 1;
         if (self.current_script_index >= self.script.length) {
           this.removeEventListener('keyup', handler);
           self.stade = 2;
@@ -111,6 +125,7 @@ header {
 }
 
 #title {
+  color: var(--font_high_color);
   position: absolute;
   display: block;
   font-size: 5rem;

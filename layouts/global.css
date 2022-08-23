@@ -8,21 +8,31 @@
 @font-face {
     font-family: Mirra;
     src: local("Mirra"),
-         url(@/assets/fonts/Mirra.otf);
-  }
+        url(@/assets/fonts/Mirra.otf);
+}
 
-  @font-face {
+@font-face {
     font-family: Raleway;
     src: local("Raleway"),
-         url(@/assets/fonts/Raleway-Regular.ttf);
-  }
+        url(@/assets/fonts/Raleway-Regular.ttf);
+}
+
 
 :root {
     --background_color: black;
     --font_high_color: white;
-    --line_color: #b8b8b8;
+    --font_low_color: #b8b8b8;
     --signature_color: #ff0011;
+    
+}
 
+a {
+    color: var(--font_high_color);
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
 }
 
 /* border-box everywhere... */
@@ -45,7 +55,7 @@ html body {
     width: 100vw;
     height: 100vh;
     font-size: clamp(11px, 1vw, 500px);
-    color: var(--font_high_color);
+    color: var(--font_low_color);
 }
 
 /* MISC */
